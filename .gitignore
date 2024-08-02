@@ -1,3 +1,25 @@
 /node_modules
 /weekday.html
 /weekend.html
+
+/about.html
+/about.ejs
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Dependency directories
+bower_components/
+
+# Build directories
+dist/
+build/
+
+# OS-specific files
+.DS_Store
+Thumbs.db

@@ -3,14 +3,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash")
-// const date = require(__dirname+"/date.js")
+const date = require(__dirname+"/date.js")
 const app = express();
+require('dotenv').config();
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static("public"));
 //connecting to mongoose
-mongoose.connect("mongodb+srv://bibin:mNwrsYFs6PCOmPQH@cluster0.sok5pnm.mongodb.net/?retryWrites=true&w=majority")
+const mongo=process.env.mongourl;
+mongoose.connect(mongo)
+
+
 .then((data)=>{
     console.log(data);
     console.log("Connection success");
@@ -53,7 +57,7 @@ let workItems = [];
 //home page responses
 app.get("/", function(req, res){
     // console.log(date.getDate());
-    // let day=date.getDate();
+    let day=date.getDate();
     Item.find({})
     .then((foundItems)=>{
         console.log(foundItems);
@@ -67,8 +71,10 @@ app.get("/", function(req, res){
             })
             res.redirect("/");
         }else{
+            console.log(day);
+            
         console.log(foundItems);
-        res.render("list",{listTitle:"Today",listItem:foundItems});
+        res.render("list",{listTitle:day,listItem:foundItems});
     }})
     .catch((err)=>{
         console.log(err);
@@ -205,40 +211,40 @@ app.get("/about",function(req,res){
 app.listen(3000,function(){
     console.log("server is running in port 3000")
 })
-    /*let currentDay = today.getDay();
-    let day = "";
+    // let currentDay = today.getDay();
+    // let day = "";
 
 
-    switch(currentDay){
-        case 0:
-            day="Sunday"
-            break;
-        case 1:
-            day="Monday"
-            break;
-        case 2:
-            day="Tuesday"
-            break;
-        case 3:
-            day="Wednesday"
-            break;
-        case 4:
-            day="Thursday"
-            break;
-        case 5:
-            day="Friday"
-            break;
-        case 6:
-            day="Saturday"
-            break;
-        default:
-            console.log("Error");
+    // switch(currentDay){
+    //     case 0:
+    //         day="Sunday"
+    //         break;
+    //     case 1:
+    //         day="Monday"
+    //         break;
+    //     case 2:
+    //         day="Tuesday"
+    //         break;
+    //     case 3:
+    //         day="Wednesday"
+    //         break;
+    //     case 4:
+    //         day="Thursday"
+    //         break;
+    //     case 5:
+    //         day="Friday"
+    //         break;
+    //     case 6:
+    //         day="Saturday"
+    //         break;
+    //     default:
+    //         console.log("Error");
 
         
-    }
-    res.render("list",{kindofDay: day});
-    console.log(currentDay);
-});*/
+    // }
+    // res.render("list",{kindofDay: day});
+    // console.log(currentDay);
+// });
 
 
 
