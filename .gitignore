@@ -2,11 +2,13 @@
 /weekday.html
 /weekend.html
 
+
 /about.html
 /about.ejs
 # Node modules
 node_modules/
 
+.vscode/
 # Environment variables
 .env
 
